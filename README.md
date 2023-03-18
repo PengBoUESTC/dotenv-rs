@@ -1,6 +1,6 @@
 # dotenv-rs
 
-forked from [dotenv](github.com/dotenv-rs/doten
+forked from [dotenv](github.com/dotenv-rs/doten)
 
 A sample project using Dotenv would look like this:
 
