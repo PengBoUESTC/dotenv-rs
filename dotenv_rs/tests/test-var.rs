@@ -1,19 +1,16 @@
 mod common;
 
-use std::collections::HashMap;
 use std::env;
 
-use dotenv::*;
+use dotenv_rs::*;
 
 use crate::common::*;
 
 #[test]
-fn test_vars() {
+fn test_var() {
     let dir = make_test_dotenv().unwrap();
 
-    let vars: HashMap<String, String> = vars().collect();
-
-    assert_eq!(vars["TESTKEY"], "test_val");
+    assert_eq!(var("TESTKEY").unwrap(), "test_val");
 
     env::set_current_dir(dir.path().parent().unwrap()).unwrap();
     dir.close().unwrap();

@@ -1,7 +1,7 @@
 [workspace]
 
 members = [
-    "dotenv",
+    "dotenv_rs",
     "dotenv_codegen",
     "dotenv_codegen_implementation",
 ]

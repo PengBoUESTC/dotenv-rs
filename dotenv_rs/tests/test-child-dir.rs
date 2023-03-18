@@ -1,23 +1,19 @@
 mod common;
 
-use dotenv::*;
-use std::env;
+use dotenv_rs::*;
+use std::{env, fs};
 
 use crate::common::*;
 
 #[test]
-fn test_from_path_iter() {
+fn test_child_dir() {
     let dir = make_test_dotenv().unwrap();
 
-    let mut path = env::current_dir().unwrap();
-    path.push(".env");
+    fs::create_dir("child").unwrap();
 
-    let iter = from_path_iter(&path).unwrap();
+    env::set_current_dir("child").unwrap();
 
-    assert!(env::var("TESTKEY").is_err());
-
-    iter.load("").ok();
-
+    dotenv().ok();
     assert_eq!(env::var("TESTKEY").unwrap(), "test_val");
 
     env::set_current_dir(dir.path().parent().unwrap()).unwrap();

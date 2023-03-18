@@ -1,4 +1,4 @@
-use dotenv::{dotenv, dotenv_with_prefix};
+use dotenv_rs::{dotenv, dotenv_with_prefix};
 use std::env;
 
 fn main() {

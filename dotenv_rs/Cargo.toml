@@ -1,17 +1,19 @@
 [package]
-name = "dotenv"
+name = "dotenv_rs"
 version = "0.15.0"
-authors = []
+authors = [
+  "pengbo <pengbotju@163.com>",
+]
 description = "A `dotenv` implementation for Rust"
-homepage = "https://github.com/dotenv-rs/dotenv"
+homepage = "https://github.com/PengBoUESTC/dotenv-rs"
 readme = "../README.md"
 keywords = ["environment", "env", "dotenv", "settings", "config"]
 license = "MIT"
-repository = "https://github.com/dotenv-rs/dotenv"
+repository = "https://github.com/PengBoUESTC/dotenv-rs"
 edition = "2018"
 
 [[bin]]
-name = "dotenv"
+name = "dotenv_rs"
 required-features = ["cli"]
 
 [dependencies]

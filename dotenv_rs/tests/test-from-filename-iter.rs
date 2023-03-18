@@ -1,15 +1,20 @@
 mod common;
 
-use dotenv::*;
+use dotenv_rs::*;
 use std::env;
 
 use crate::common::*;
 
 #[test]
-fn test_default_location() {
+fn test_from_filename_iter() {
     let dir = make_test_dotenv().unwrap();
 
-    dotenv().ok();
+    let iter = from_filename_iter(".env").unwrap();
+
+    assert!(env::var("TESTKEY").is_err());
+
+    iter.load("").ok();
+
     assert_eq!(env::var("TESTKEY").unwrap(), "test_val");
 
     env::set_current_dir(dir.path().parent().unwrap()).unwrap();
