@@ -19,9 +19,10 @@ impl<R: Read> Iter<R> {
         }
     }
 
-    pub fn load(self) -> Result<()> {
+    pub fn load(self, prefix: &str) -> Result<()> {
         for item in self {
             let (key, value) = item?;
+            if !key.starts_with(prefix) { continue; }
             if env::var(&key).is_err() {
                 env::set_var(&key, value);
             }

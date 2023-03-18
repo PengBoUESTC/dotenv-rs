@@ -80,7 +80,23 @@ pub fn vars() -> Vars {
 /// ```
 pub fn from_path<P: AsRef<Path>>(path: P) -> Result<()> {
     let iter = Iter::new(File::open(path).map_err(Error::Io)?);
-    iter.load()
+    iter.load("")
+}
+/// Loads the file at the specified absolute path.
+/// Set the env vars with target prefix
+/// Examples
+///
+/// ```
+/// use dotenv;
+/// use std::env;
+/// use std::path::{Path};
+///
+/// let my_path = env::home_dir().and_then(|a| Some(a.join("/.env"))).unwrap();
+/// dotenv::from_path_with_prefix(my_path.as_path(), &String::from("Test"));
+/// ```
+pub fn from_path_with_prefix<P: AsRef<Path>>(path: P, prefix: &str) -> Result<()> {
+    let iter = Iter::new(File::open(path).map_err(Error::Io)?);
+    iter.load(prefix)
 }
 
 /// Like `from_path`, but returns an iterator over variables instead of loading into environment.
@@ -121,7 +137,28 @@ pub fn from_path_iter<P: AsRef<Path>>(path: P) -> Result<Iter<File>> {
 /// ```
 pub fn from_filename<P: AsRef<Path>>(filename: P) -> Result<PathBuf> {
     let (path, iter) = Finder::new().filename(filename.as_ref()).find()?;
-    iter.load()?;
+    iter.load("")?;
+    Ok(path)
+}
+/// Loads the specified file from the environment's current directory or its parents in sequence.
+/// Set the env vars with target prefix
+/// 
+/// # Examples
+/// ```
+/// use dotenv;
+/// dotenv::from_filename_with_prefix("custom.env", &String::from("Test")).ok();
+/// ```
+///
+/// It is also possible to do the following, but it is equivalent to using `dotenv::dotenv()`,
+/// which is preferred.
+///
+/// ```
+/// use dotenv;
+/// dotenv::from_filename_with_prefix(".env", &String::from("Test")).ok();
+/// ```
+pub fn from_filename_with_prefix<P: AsRef<Path>>(filename: P, prefix: &str) -> Result<PathBuf> {
+    let (path, iter) = Finder::new().filename(filename.as_ref()).find()?;
+    iter.load(prefix)?;
     Ok(path)
 }
 
@@ -160,7 +197,21 @@ pub fn from_filename_iter<P: AsRef<Path>>(filename: P) -> Result<Iter<File>> {
 /// ```
 pub fn dotenv() -> Result<PathBuf> {
     let (path, iter) = Finder::new().find()?;
-    iter.load()?;
+    iter.load("")?;
+    Ok(path)
+}
+
+/// It loads the .env file located in the environment's current directory or its parents in sequence.
+/// Set the env vars with target prefix
+/// 
+/// # Examples
+/// ```
+/// use dotenv;
+/// dotenv::dotenv_with_prefix(&String::from("Test")).ok();
+/// ```
+pub fn dotenv_with_prefix(prefix: &str) -> Result<PathBuf> {
+    let (path, iter) = Finder::new().find()?;
+    iter.load(prefix)?;
     Ok(path)
 }
 

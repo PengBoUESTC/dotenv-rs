@@ -13,7 +13,7 @@ fn test_from_filename_iter() {
 
     assert!(env::var("TESTKEY").is_err());
 
-    iter.load().ok();
+    iter.load("").ok();
 
     assert_eq!(env::var("TESTKEY").unwrap(), "test_val");
 
