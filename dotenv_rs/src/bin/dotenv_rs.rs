@@ -1,4 +1,3 @@
-extern crate clap;
 extern crate dotenv_rs;
 
 use clap::{App, AppSettings, Arg};

@@ -1,6 +1,6 @@
 [package]
 name = "dotenv_rs"
-version = "0.15.1"
+version = "0.15.2"
 authors = [
   "pengbo <pengbotju@163.com>",
 ]
