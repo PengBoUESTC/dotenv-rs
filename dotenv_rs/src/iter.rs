@@ -39,7 +39,6 @@ impl<R: Read> Iter<R> {
             if !key.starts_with(prefix) { continue; }
             result.insert(key.clone(), Some(value.clone()));
         }
-        println!("{:?}", result);
         Ok(result)
     }
 
