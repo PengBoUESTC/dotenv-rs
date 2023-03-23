@@ -10,6 +10,7 @@ mod find;
 mod iter;
 mod parse;
 
+use std::collections::HashMap;
 use std::env::{self, Vars};
 use std::ffi::OsStr;
 use std::fs::File;
@@ -229,4 +230,29 @@ pub fn dotenv_with_prefix(prefix: &str) -> Result<PathBuf> {
 pub fn dotenv_iter() -> Result<iter::Iter<File>> {
     let (_, iter) = Finder::new().find()?;
     Ok(iter)
+}
+
+/// Return the file parse result, and it will not set the env vars
+/// get the vars with target prefix
+/// # Examples
+/// ```no_run
+/// use dotenv_rs;
+///
+/// dotenv_rs::get_vars_with_prefix(".test", &String::from("Test"));
+/// ```
+pub fn get_vars_with_prefix<P: AsRef<Path>>(path: P, prefix: &str) -> Result<HashMap<String, Option<String>>> {
+    let iter = Iter::new(File::open(path).map_err(Error::Io)?);
+    iter.get_vars_base(prefix)
+}
+
+/// Return the file parse result, and it will not set the env vars
+/// # Examples
+/// ```no_run
+/// use dotenv_rs;
+///
+/// dotenv_rs::get_vars(".test").ok();
+/// ```
+pub fn get_vars<P: AsRef<Path>>(path: P) -> Result<HashMap<String, Option<String>>> {
+    let iter = Iter::new(File::open(path).map_err(Error::Io)?);
+    iter.get_vars()
 }

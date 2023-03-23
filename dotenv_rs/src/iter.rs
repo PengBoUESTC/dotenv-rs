@@ -30,6 +30,27 @@ impl<R: Read> Iter<R> {
 
         Ok(())
     }
+
+    pub fn get_vars_base(self, prefix: &str) -> Result<HashMap<String, Option<String>>>{
+        let mut result = HashMap::new();
+
+        for item in self {
+            let (key, value) = item?;
+            if !key.starts_with(prefix) { continue; }
+            result.insert(key.clone(), Some(value.clone()));
+        }
+        println!("{:?}", result);
+        Ok(result)
+    }
+
+    pub fn get_vars_with_prefix(self, prefix: &str) -> Result<HashMap<String, Option<String>>> {
+        self.get_vars_base(prefix)
+    }
+
+    pub fn get_vars(self) -> Result<HashMap<String, Option<String>>> {
+        self.get_vars_base(&String::from(""))
+    }
+
 }
 
 impl<R: Read> Iterator for Iter<R> {
