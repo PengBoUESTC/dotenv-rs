@@ -1,4 +1,4 @@
-# dotenv-rs
+# dotenv-rs <img src="https://shields.io/crates/v/dotenv-rs">
 
 forked from [dotenv](github.com/dotenv-rs/doten)
 
